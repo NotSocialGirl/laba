@@ -23,13 +23,13 @@ class okno_reg : AppCompatActivity() {
         parol_perviy = findViewById(R.id.parol_perviy)
         parol_povtor = findViewById(R.id.parol_povtor)
         registr_button = findViewById(R.id.registr_button)
-        shared_preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        shared_preferences = getSharedPreferences("dannie_profilya", MODE_PRIVATE)
+
 
         registr_button.setOnClickListener {
-
-            val name = registr_name.text.toString().trim()
-            val password_perviy = parol_perviy.text.toString().trim()
-            val password = parol_povtor.text.toString().trim()
+            val name = registr_name.text.toString()
+            val password_perviy = parol_perviy.text.toString()
+            val password = parol_povtor.text.toString()
 
             if (password_perviy == password){
                 Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show()
