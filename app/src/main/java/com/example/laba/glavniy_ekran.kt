@@ -27,6 +27,7 @@ class glavniy_ekran : AppCompatActivity() {
             val intent = Intent(this, profil_menu::class.java)
             startActivity(intent)
         }
+        //tezt
 
         gallery_button.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
