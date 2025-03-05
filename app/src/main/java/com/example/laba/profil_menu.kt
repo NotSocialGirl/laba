@@ -29,6 +29,8 @@ class profil_menu : AppCompatActivity() {
         prosmotr_parolya.text = "Пароль: $password"
 
         domoy_test_button.setOnClickListener {
+            prosmotr_logina.text = "Логин:"
+            prosmotr_parolya.text = "Пароль:"
             val intent = Intent(this, vhod_ili_propusk::class.java)
             startActivity(intent)
         }
