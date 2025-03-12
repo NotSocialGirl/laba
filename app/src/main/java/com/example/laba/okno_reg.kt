@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import org.json.JSONObject
 
 class okno_reg : AppCompatActivity() {
     lateinit var registr_name: EditText
@@ -25,28 +26,31 @@ class okno_reg : AppCompatActivity() {
         registr_button = findViewById(R.id.registr_button)
         shared_preferences = getSharedPreferences("dannie_profilya", MODE_PRIVATE)
 
-
         registr_button.setOnClickListener {
             val name = registr_name.text.toString()
             val password_perviy = parol_perviy.text.toString()
             val password = parol_povtor.text.toString()
 
-            if (password_perviy == password){
-                Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show()
-                val editor = shared_preferences.edit()
-                editor.putString("EXTRA_NAME", name)
-                editor.putString("EXTRA_PASSWORD", password)
-                editor.apply()
+            if (password_perviy == password) {
+                val slovarJson = shared_preferences.getString("slovar_polzovateley", "{}")
+                val slovar = JSONObject(slovarJson)
 
-                val intent = Intent(this, glavniy_ekran::class.java)
-                startActivity(intent)
-            }
-            else{
+                if (slovar.has(name)) {
+                    Toast.makeText(this, "Пользователь с таким именем уже существует", Toast.LENGTH_SHORT).show()
+                } else {
+                    slovar.put(name, password)
+                    shared_preferences.edit().putString("slovar_polzovateley", slovar.toString()).apply()
+
+                    Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show()
+
+                    shared_preferences.edit().putString("EXTRA_NAME", name).putString("EXTRA_PASSWORD", password).apply()
+
+                    val intent = Intent(this, glavniy_ekran::class.java)
+                    startActivity(intent)
+                }
+            } else {
                 Toast.makeText(this, "Пароли должны совпадать", Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
 }
-
